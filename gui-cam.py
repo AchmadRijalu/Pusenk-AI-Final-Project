@@ -65,10 +65,6 @@ def Capture():
 
 
 
-def StopCAM():
-   
-    root.cap.release()
-
 def StartCAM():
     
     root.cap = cv2.VideoCapture(0)
@@ -122,8 +118,6 @@ root.browseButton.grid(row=3, column=2, padx=10, pady=10)
 root.captureBTN = Button(root, text="CAPTURE", command=Capture, bg="black", font=('times new roman',20), fg="white", width=20)
 root.captureBTN.grid(row=4, column=1, padx=10, pady=10)
 
-# root.CAMBTN = Button(root, text="STOP CAMERA", command=StopCAM, bg="LIGHTBLUE", font=('Comic Sans MS',15), width=13)
-# root.CAMBTN.grid(row=4, column=2)
 
 root.previewlabel = Label(bg="black", fg="white", text="Hasil Capture", font=('arial',20))
 root.previewlabel.grid(row=1, column=4, padx=10, pady=10, columnspan=2)
@@ -133,8 +127,6 @@ root.imageLabel.grid(row=2, column=4, padx=10, pady=10, columnspan=2)
 
 root.openImageEntry = Label(text="HASIL TRANSLATE DISINI",bg="black", fg="white", font=('times new roman',26))
 root.openImageEntry.grid(row=4, column=4, padx=10, pady=10 )
-
-
 
 ShowFeed()
 root.mainloop()
