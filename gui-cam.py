@@ -132,7 +132,7 @@ root.imageLabel = Label(root, bg="black", borderwidth=3, relief="groove")
 root.imageLabel.grid(row=2, column=4, padx=10, pady=10, columnspan=2)
 
 root.openImageEntry = Label(text="HASIL TRANSLATE DISINI",bg="black", fg="white", font=('times new roman',26))
-root.openImageEntry.grid(row=3, column=4, padx=10, pady=10 )
+root.openImageEntry.grid(row=4, column=4, padx=10, pady=10 )
 
 
 
