@@ -4,11 +4,10 @@ from tkinter import *
 from PIL import Image,ImageTk
 from datetime import datetime
 from tkinter import messagebox, filedialog
+import pytesseract
 
-
-
-    
-
+pytesseract.pytesseract.tesseract_cmd = r"C:\Users\achma\AppData\Local\programs\Tesseract-OCR\tesseract.exe"
+imgarray = []
 
 def ShowFeed():
     
@@ -57,11 +56,12 @@ def Capture():
     # Creating object of PhotoImage() class to display the frame
     saved_image = ImageTk.PhotoImage(saved_image)
 
+    imgarray.append(imgName)
     # Configuring the label to display the frame
     root.imageLabel.config(image=saved_image)
     root.imageLabel.photo = saved_image
     if success :
-        messagebox.showinfo("Berhasil disimpan! " + imgName)
+        messagebox.showinfo( title="Berhasil Disimpan!", message="Nama File :  " + imgName)
 
 
 
@@ -84,8 +84,29 @@ def FindDirect():
     # Displaying the directory in the directory textbox
     destPath.set(destDirectory)
 
+def Translating():
+    
+    imggray = cv2.imread(imgarray[-1])
+    imggray = cv2.resize(imggray, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
+    gray2 = cv2.cvtColor(imggray, cv2.COLOR_BGR2GRAY)
+    adapptive = cv2.adaptiveThreshold(gray2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,85,11)
+
+    text = pytesseract.image_to_string(adapptive)
+    messagebox.showinfo(title="HASIL TRANSLATE", message= text)
+
+    # messagebox.showinfo(title="HASIL TRANSLATE", message= adapptive)
+    cv2.imshow("gray", gray2)
+    cv2.imshow("adaptive", adapptive)
+    cv2.waitKey(0)
+    
+
+# def translate():
+#     messagebox.showerror("Pilih Directory dulu!")
+
 # Creating object of tk class
 root = tk.Tk()
+
+
 
 root.cap = cv2.VideoCapture(0)
 width, height = 640, 480
@@ -125,7 +146,8 @@ root.previewlabel.grid(row=1, column=4, padx=10, pady=10, columnspan=2)
 root.imageLabel = Label(root, bg="black", borderwidth=3, relief="groove")
 root.imageLabel.grid(row=2, column=4, padx=10, pady=10, columnspan=2)
 
-root.openImageEntry = Label(text="HASIL TRANSLATE DISINI",bg="black", fg="white", font=('times new roman',26))
+# root.openImageEntry = Label(text="HASIL TRANSLATE DISINI",bg="black", fg="white", font=('times new roman',26))
+root.openImageEntry = Button(root, text="Translate", command= Translating, bg="black", font=('times new roman',20), fg="white", width=20)
 root.openImageEntry.grid(row=4, column=4, padx=10, pady=10 )
 
 ShowFeed()
