@@ -5,11 +5,9 @@ from tkinter import *
 from PIL import Image,ImageTk
 from datetime import datetime
 from tkinter import messagebox, filedialog
-import pytesseract
 import easyocr
 from translate import Translator
 
-# pytesseract.pytesseract.tesseract_cmd = r"C:\Users\achma\AppData\Local\programs\Tesseract-OCR\tesseract.exe"
 imgarray = []
 
 def ShowFeed():
@@ -94,7 +92,6 @@ def Translating():
     gray2 = cv2.cvtColor(imggray, cv2.COLOR_BGR2GRAY)
     adapptive = cv2.adaptiveThreshold(gray2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,85,11)
 
-    # text = pytesseract.image_to_string(adapptive)
     text = ''
     reader = easyocr.Reader(['en'])
     results = reader.readtext(gray2)
@@ -107,16 +104,10 @@ def Translating():
 
     messagebox.showinfo(title="HASIL TRANSLATE", message= resulttranslate)
 
-
-
-    # messagebox.showinfo(title="HASIL TRANSLATE", message= adapptive)
     cv2.imshow("gray", gray2)
     cv2.imshow("adaptive", adapptive)
     cv2.waitKey(0)
     
-
-# def translate():
-#     messagebox.showerror("Pilih Directory dulu!")
 
 # Creating object of tk class
 root = tk.Tk()
