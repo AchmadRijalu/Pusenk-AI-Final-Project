@@ -1,3 +1,4 @@
+from fnmatch import translate
 import cv2
 import tkinter as tk
 from tkinter import *
@@ -6,6 +7,7 @@ from datetime import datetime
 from tkinter import messagebox, filedialog
 import pytesseract
 import easyocr
+from translate import Translator
 
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Users\achma\AppData\Local\programs\Tesseract-OCR\tesseract.exe"
 imgarray = []
@@ -100,7 +102,10 @@ def Translating():
     for result in results:
         text += result[1] + ' '
 
-    messagebox.showinfo(title="HASIL TRANSLATE", message= text)
+    translator = Translator(to_lang='id', from_lang='en')
+    resulttranslate = translator.translate(text)
+
+    messagebox.showinfo(title="HASIL TRANSLATE", message= resulttranslate)
 
 
 
