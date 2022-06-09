@@ -10,7 +10,7 @@ from translate import Translator
 
 imgarray = []
 
-def ShowFeed():
+def showing():
     
     ret, frame = root.cap.read()
 
@@ -26,7 +26,7 @@ def ShowFeed():
         root.cameraLabel.configure(image=imgtk)       
         root.cameraLabel.imgtk = imgtk
 
-        root.cameraLabel.after(10, ShowFeed)
+        root.cameraLabel.after(10, showing)
     else:        
         root.cameraLabel.configure(image='')
 
@@ -66,7 +66,7 @@ def Capture():
 
 
 
-def StartCAM():
+def Starto():
     
     root.cap = cv2.VideoCapture(0)
     width_1, height_1 = 640, 480
@@ -76,7 +76,7 @@ def StartCAM():
     
     root.CAMBTN.config(text="STOP CAMERA", command=StopCAM)
     root.cameraLabel.config(text="")
-    ShowFeed()
+    showing()
 
 def FindDirect():
     
@@ -86,16 +86,14 @@ def FindDirect():
     destPath.set(destDirectory)
 
 def Translating():
-    
     imggray = cv2.imread(imgarray[-1])
     imggray = cv2.resize(imggray, None, fx=1, fy=1, )
     gray2 = cv2.cvtColor(imggray, cv2.COLOR_BGR2GRAY)
-    adapptive = cv2.adaptiveThreshold(gray2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,85,11)
+    adapptive = cv2.adaptiveThreshold(gray2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,25,5)
 
     text = ''
     reader = easyocr.Reader(['en'])
-    results = reader.readtext(gray2)
-
+    results = reader.readtext(adapptive)
     for result in results:
         text += result[1] + ' '
 
@@ -111,8 +109,6 @@ def Translating():
 
 # Creating object of tk class
 root = tk.Tk()
-
-
 
 root.cap = cv2.VideoCapture(0)
 width, height = 640, 480
@@ -156,5 +152,8 @@ root.imageLabel.grid(row=2, column=4, padx=10, pady=10, columnspan=2)
 root.openImageEntry = Button(root, text="Translate", command= Translating, bg="black", font=('times new roman',20), fg="white", width=20)
 root.openImageEntry.grid(row=4, column=4, padx=10, pady=10 )
 
-ShowFeed()
+showing()
 root.mainloop()
+
+
+##Credit Tkinter : https://github.com/pythonpool/small-projects
