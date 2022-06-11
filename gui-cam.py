@@ -65,19 +65,6 @@ def Capture():
         messagebox.showinfo( title="Berhasil Disimpan!", message="Nama File :  " + imgName)
 
 
-
-def Starto():
-    
-    root.cap = cv2.VideoCapture(0)
-    width_1, height_1 = 640, 480
-    root.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width_1)
-    root.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height_1)
-
-    
-    root.CAMBTN.config(text="STOP CAMERA", command=StopCAM)
-    root.cameraLabel.config(text="")
-    showing()
-
 def FindDirect():
     
     destDirectory = filedialog.askdirectory(initialdir="Directorymu...")
